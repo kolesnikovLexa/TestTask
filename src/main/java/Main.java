@@ -112,7 +112,7 @@ public class Main {
 
         FileWriter writer = new FileWriter("src/main/resources/output.txt", false);
         for (String str: finalHashMap.keySet()) {
-            writer.write(str + " - " + finalHashMap.get(str) + System.lineSeparator());
+            writer.write(str + " : " + finalHashMap.get(str) + System.lineSeparator());
         }
         writer.flush();
 
