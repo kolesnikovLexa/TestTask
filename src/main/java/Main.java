@@ -18,16 +18,16 @@ public class Main {
 
         List<String> allLines = Files.readAllLines(Paths.get("src/main/resources/input.txt"), StandardCharsets.UTF_8);
 
-        Scanner sc= new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         boolean correctSizes = false;
         int firstGroupSize = 0;
         int secondGroupSize = 0;
 
-        while (!correctSizes){
+        while (!correctSizes) {
             firstGroupSize = sc.nextInt();
             secondGroupSize = sc.nextInt();
-            if(firstGroupSize + secondGroupSize <= allLines.size()) {
+            if (firstGroupSize + secondGroupSize <= allLines.size()) {
                 correctSizes = true;
             } else {
                 System.out.println("В input.txt всего " + allLines.size() + " строк. Укажите корректный размер групп");
@@ -71,8 +71,8 @@ public class Main {
             for (int j = 0; j < secondGroupNormalFormsLists.size(); j++) {
                 List<String> secondGroupWords = secondGroupNormalFormsLists.get(j);
 
-                for (String firstGroupWord: firstGroupWords) {
-                    for (String secondGroupWord: secondGroupWords) {
+                for (String firstGroupWord : firstGroupWords) {
+                    for (String secondGroupWord : secondGroupWords) {
 
                         if ((firstGroupWord.equals(secondGroupWord)) && (!firstGroupUnmatched.contains(j))) {
                             numberOfMatches++;
@@ -89,8 +89,7 @@ public class Main {
             if (switchWords && !match.equals("?")) {
                 secondGroupMatched.add(match);
                 finalHashMap.put(match, firstGroup.get(i));
-            }
-            else {
+            } else {
                 finalHashMap.put(firstGroup.get(i), match);
                 if (!match.equals("?"))
                     secondGroupMatched.add(match);
@@ -100,9 +99,9 @@ public class Main {
         }
 
         //Сопоставить, если есть слова без соответствий в 1й и 2й группах
-        for (String str1: firstGroupUnmatched) {
-            for (String str2: secondGroup) {
-                if (!secondGroupMatched.contains(str2)){
+        for (String str1 : firstGroupUnmatched) {
+            for (String str2 : secondGroup) {
+                if (!secondGroupMatched.contains(str2)) {
                     secondGroupMatched.add(str2);
                     finalHashMap.put(str1, str2);
                     break;
@@ -111,7 +110,7 @@ public class Main {
         }
 
         FileWriter writer = new FileWriter("src/main/resources/output.txt", false);
-        for (String str: finalHashMap.keySet()) {
+        for (String str : finalHashMap.keySet()) {
             writer.write(str + " : " + finalHashMap.get(str) + System.lineSeparator());
         }
         writer.flush();
@@ -125,10 +124,10 @@ public class Main {
 
         ArrayList<List<String>> normalFormsLists = new ArrayList<>();
 
-        for (String line: group) {
+        for (String line : group) {
             List<String> words = List.of(line.split(" "));
             List<String> normalForms = new ArrayList<>();
-            for (String word: words) {
+            for (String word : words) {
                 Matcher matcher = pattern.matcher(word);
                 if (matcher.matches()) {
                     normalForms = Stream.concat(normalForms.stream(), luceneMorph.getNormalForms(word.toLowerCase()).stream()).toList();
